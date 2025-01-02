@@ -23,29 +23,29 @@ function transform(arr) {
   for (let i = 0; i < arr.length; i++) {
     const current = arr[i];
 
-    if (current === '--double-prev') {
-      if (i > 0 && arr[i - 1] !== '--discard-next') {
-        result.push(arr[i - 1]);
-      }
+    if (current === '--discard-next') {
+      i += 1;
       continue;
     }
 
     if (current === '--discard-prev') {
-      if (result.length > 0 && arr[i - 1] !== '--discard-next') {
+      if (result.length > 0 && arr[i - 2] !== '--discard-next') {
         result.pop();
       }
       continue;
     }
 
     if (current === '--double-next') {
-      if (i + 1 < arr.length) {
+      if (i + 1 < arr.length && arr[i + 1] !== '--discard-next') {
         result.push(arr[i + 1]);
       }
       continue;
     }
 
-    if (current === '--discard-next') {
-      i++;
+    if (current === '--double-prev') {
+      if (i > 0 && arr[i - 2] !== '--discard-next' && result.length > 0) {
+        result.push(result[result.length - 1]);
+      }
       continue;
     }
 
